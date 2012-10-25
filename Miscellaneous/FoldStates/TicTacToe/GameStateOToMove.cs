@@ -1,4 +1,6 @@
-﻿namespace Miscellaneous.FoldStates.TicTacToe
+﻿using System;
+
+namespace Miscellaneous.FoldStates.TicTacToe
 {
     public partial class GameStateOToMove : GameStateBase
     {
@@ -12,11 +14,11 @@
         {
         }
 
-        public IGameState OMove(Row row, Col col)
+        public IGameState Move(Row row, Col col, Action<Move> invalidMoveCallback)
         {
             var move = new Move(row, col, Player.O);
-            var newMoveSequence = MoveSequence.WithNewMove(move);
-            return newMoveSequence.IsGameFinished()
+            var newMoveSequence = MoveSequence.WithNewMove(move, invalidMoveCallback);
+            return newMoveSequence.IsGameOver()
                 ? new GameStateGameOver(newMoveSequence)
                 : new GameStateXToMove(newMoveSequence) as IGameState;
         }
@@ -24,11 +26,6 @@
         bool IGameState.IsValidMove(Row row, Col col)
         {
             return MoveSequence.IsValidMove(row, col);
-        }
-
-        Player? IGameState.WhoseTurn()
-        {
-            return Player.O;
         }
     }
 }

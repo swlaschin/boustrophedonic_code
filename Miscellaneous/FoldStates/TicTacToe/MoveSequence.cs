@@ -32,11 +32,15 @@ namespace Miscellaneous.FoldStates.TicTacToe
             private set;
         }
 
-        internal MoveSequence WithNewMove(Move move)
+        internal MoveSequence WithNewMove(Move move, Action<Move> invalidMoveCallback)
         {
             if (!IsValidMove(move.Row, move.Col))
             {
-                throw new InvalidMoveException(move);
+                // tell the caller
+                invalidMoveCallback(move);
+
+                // leave the move sequence alone
+                return this;
             }
 
             var moves = Moves.ToList();
@@ -49,7 +53,7 @@ namespace Miscellaneous.FoldStates.TicTacToe
             return !Moves.Any(m => m.IsSameSquare(row, col));
         }
 
-        internal bool IsGameFinished()
+        internal bool IsGameOver()
         {
             // put detailed logic here. For now just assume X wins after three!
             return Moves.Count(m => m.Player == Player.X) == 3;
@@ -58,6 +62,12 @@ namespace Miscellaneous.FoldStates.TicTacToe
         internal bool CanPlay(Row row, Col col)
         {
             return true;
+        }
+
+        internal GameOverState WhoWonOrDraw()
+        {
+            // TODO
+            return GameOverState.XWon;
         }
     }
 }

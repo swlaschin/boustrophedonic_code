@@ -1,21 +1,26 @@
 ﻿namespace Miscellaneous.FoldStates.TicTacToe
 {
-    public partial class GameStateGameOver : GameStateBase
+public enum GameOverState
+{
+    XWon, YWon, Draw
+}
+
+
+public partial class GameStateGameOver : GameStateBase
+{
+    internal GameStateGameOver(MoveSequence moveSequence)
+        : base(moveSequence)
     {
-        internal GameStateGameOver(MoveSequence moveSequence)
-            : base(moveSequence)
-        {
-        }
-
-        bool IGameState.IsValidMove(Row row, Col col)
-        {
-            return false;
-        }
-
-        Player? IGameState.WhoseTurn()
-        {
-            return null;
-        }
-
     }
+
+    public GameOverState WhoWonOrDraw()
+    {
+        return MoveSequence.WhoWonOrDraw();
+    }
+
+    bool IGameState.IsValidMove(Row row, Col col)
+    {
+        return false;
+    }
+}
 }
