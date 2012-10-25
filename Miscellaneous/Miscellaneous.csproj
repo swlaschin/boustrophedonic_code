@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1347F289-C2D9-4A8F-8413-FB182C322AAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Miscellaneous</RootNamespace>
+    <AssemblyName>Miscellaneous</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FoldStates\Email\IEmailAddress.cs" />
+    <Compile Include="FoldStates\Email\EmailAddress.cs" />
+    <Compile Include="FoldStates\Email\Test\QaEMailAddress.cs" />
+    <Compile Include="FoldStates\Email\ValidEmailAddress.cs" />
+    <Compile Include="FoldStates\Email\IEmailAddress.designer.cs">
+      <DependentUpon>IEmailAddress.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="FoldStates\ShoppingCart\CartStateEmpty.cs" />
+    <Compile Include="FoldStates\ShoppingCart\CartStateActive.cs" />
+    <Compile Include="FoldStates\ShoppingCart\CartStatePaid.cs" />
+    <Compile Include="FoldStates\ShoppingCart\Product.cs" />
+    <Compile Include="FoldStates\ShoppingCart\ICartState.designer.cs">
+      <DependentUpon>ICartState.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="FoldStates\ShoppingCart\ICartState.cs" />
+    <Compile Include="FoldStates\ShoppingCart\NonFoldImplementations\NonFoldImplementation.cs" />
+    <Compile Include="FoldStates\ShoppingCart\Test\QaShoppingCartNonFoldStyle.cs" />
+    <Compile Include="FoldStates\ShoppingCart\Test\QaShoppingCart.cs" />
+    <Compile Include="FoldStates\TicTacToe\InvalidMoveException.cs" />
+    <Compile Include="FoldStates\TicTacToe\GameStateBase.cs" />
+    <Compile Include="FoldStates\TicTacToe\MoveSequence.cs" />
+    <Compile Include="FoldStates\TicTacToe\Move.cs" />
+    <Compile Include="FoldStates\TicTacToe\IGameState.cs" />
+    <Compile Include="FoldStates\TicTacToe\TicTacToeGame.cs" />
+    <Compile Include="FoldStates\TicTacToe\Test\QaTicTacToe.cs" />
+    <Compile Include="FoldStates\TicTacToe\IGameState.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IGameState.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FoldStates\TicTacToe\GameStateOToMove.cs" />
+    <Compile Include="FoldStates\TicTacToe\GameStateGameOver.cs" />
+    <Compile Include="FoldStates\TicTacToe\GameStateXToMove.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SemanticStrings\EmailAddress\EmailAddress.designer.cs">
+      <DependentUpon>EmailAddress.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="SemanticStrings\EmailAddress\EmailAddress.cs" />
+    <Compile Include="SemanticStrings\EmailAddress\Test\QaEmailAddress.cs" />
+    <Compile Include="SemanticStrings\Example\WrappedStringCustomTransform.cs" />
+    <Compile Include="SemanticStrings\Example\WrappedStringCustomTransform.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WrappedStringCustomTransform.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\Example\WrappedStringNoTransform.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WrappedStringNoTransform.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\Example\Test\QaWrappedString.cs" />
+    <Compile Include="SemanticStrings\Example\WrappedStringTrimToUpper.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WrappedStringTrimToUpper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\Example\WrappedStringTrim.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WrappedStringTrim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\ProductSearch\CurrencyCode.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\ProductSearch\ProductCode.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\ProductSearch\ProductRepository.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\IProductRepository.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\Product.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\ReferenceData.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\SupplierCode.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupplierCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SemanticStrings\ProductSearch\Test\UsageExample.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\Test\QaCurrencyCode.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\Test\QaProductCode.cs" />
+    <Compile Include="SemanticStrings\ProductSearch\Test\QaProductRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FoldStates\Email\IEmailAddress.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IEmailAddress.designer.cs</LastGenOutput>
+    </None>
+    <None Include="FoldStates\FoldStates.ttinclude" />
+    <None Include="FoldStates\ShoppingCart\ICartState.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ICartState.designer.cs</LastGenOutput>
+    </None>
+    <None Include="FoldStates\TicTacToe\IGameState.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IGameState.designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="SemanticStrings\EmailAddress\EmailAddress.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EmailAddress.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\Example\WrappedStringCustomTransform.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WrappedStringCustomTransform.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\Example\WrappedStringTrimToUpper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WrappedStringTrimToUpper.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\Example\WrappedStringTrim.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WrappedStringTrim.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\ProductSearch\CurrencyCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CurrencyCode.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\ProductSearch\SupplierCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SupplierCode.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\ProductSearch\ProductCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ProductCode.designer.cs</LastGenOutput>
+    </None>
+    <None Include="SemanticStrings\StringWrapper.ttinclude" />
+    <None Include="SemanticStrings\Example\WrappedStringNoTransform.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WrappedStringNoTransform.designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

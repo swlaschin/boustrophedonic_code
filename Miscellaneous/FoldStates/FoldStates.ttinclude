@@ -1,0 +1,103 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension="designer.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.IO" #>
+<#
+//==========================================
+// FoldStates template v1.0.0
+//
+//------------------------------------------
+// Purpose: 
+//------------------------------------------
+//
+// To automatically generate a set of classes representing various states, sharing a common interface.
+//
+//------------------------------------------
+// Usage: 
+//------------------------------------------
+// 1) filename is the name of the inteface:
+// 2) Set required variables:
+//     states : string[]   // a list of the state names
+// 3) Include this file "FoldStates.ttinclude"
+// See example below.
+//
+//------------------------------------------
+// Example for representing board game states
+//
+// assume file is called "IChessGame.tt", the file content is:
+//------------------------------------------
+// 
+//  
+// \<# 
+// var states = new [] {"WhitetoMove", "BlacktoMove","GameOver"};   
+// \#>
+// 
+// \<#@ include file="..\FoldStates.ttinclude"  \#>
+//
+//==========================================
+
+var namespaceHint = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint");
+Func<string, string> toCamelCase = s => new String(s.Select((c, i) => i == 0 ? Char.ToLower(c) : c).ToArray());
+var interfaceName = Path.GetFileNameWithoutExtension(Host.TemplateFile);
+var foldParamStr = String.Join(", ",states.Select(s => String.Format("Func<{0}, {1}> {2}", s, interfaceName, toCamelCase(s))));
+var actionParamStr = String.Join(", ",states.Select(s => String.Format("Action<{0}> {1}", s, toCamelCase(s))));
+var funcParamStr = String.Join(", ",states.Select(s => String.Format("Func<{0}, TObject> {1}", s, toCamelCase(s))));
+#>
+// ============================================================================
+// Auto-generated. Do not edit!
+//
+// To add functionality, create and edit the partial class in a separate file. 
+// ============================================================================
+
+using System;
+
+namespace <#= namespaceHint #>
+{
+
+
+	// ======================================
+	// partial Interface
+	// ======================================
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("T4Template:FoldStates.ttinclude","1.0.0")] 
+	partial interface <#= interfaceName #> 
+	{
+		<#= interfaceName #> Transition(<#= foldParamStr #>);
+		void Action(<#= actionParamStr #>);
+		TObject Func<TObject>(<#= funcParamStr #>);
+	}
+
+
+	<#  
+	foreach (var state in states) 
+	{
+	#>
+
+	// ======================================
+	// partial class for each state
+	// ======================================
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("T4Template:FoldStates.ttinclude","1.0.0")] 
+	partial class <#= state #> : <#= interfaceName #> 
+	{
+		<#= interfaceName #> <#= interfaceName #>.Transition(<#= foldParamStr #>)
+		{
+			return <#= toCamelCase(state) #>(this);
+		}
+
+		void <#= interfaceName #>.Action(<#= actionParamStr #>)
+		{
+			<#= toCamelCase(state) #>(this);
+		}
+
+		TObject <#= interfaceName #>.Func<TObject>(<#= funcParamStr #>)
+		{
+			return <#= toCamelCase(state) #>(this);
+		}
+
+	}
+
+	<# 
+	}
+	#>
+
+}

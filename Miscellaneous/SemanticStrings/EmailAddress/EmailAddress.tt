@@ -1,0 +1,4 @@
+﻿<# 
+var options = new { DefaultTransform = "TransformEmailAddress" };
+#>
+<#@ include file="..\StringWrapper.ttinclude" #>

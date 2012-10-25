@@ -1,0 +1,228 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".designer.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.IO" #>
+<#
+//==========================================
+// StringWrapper template v1.0.0
+//
+//------------------------------------------
+// Purpose: 
+//------------------------------------------
+//
+// To automatically generate nullable struct around a string.
+//
+//------------------------------------------
+// Usage: 
+//------------------------------------------
+// 1) filename is the name of the new struct. 
+// 2) Set default transform for validation.
+//      var options = new { DefaultTransform = one of "None" | "Trim" | "TrimToUpper" | Path.To.Validation.Function };
+// 3) Include this file "FoldStates.ttinclude"
+// See example below.
+//
+//------------------------------------------
+// Example for representing board game states
+//
+// assume file is called "ProductCode.tt", the file content is:
+//------------------------------------------
+// \<#
+// var options = new { DefaultTransform = "NotEmptyUppercase" };
+// \#>
+// \<#@ include file="..\StringWrapper.ttinclude"  \#>
+//
+//==========================================
+
+var namespaceHint = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint");
+var structName = Path.GetFileNameWithoutExtension(Host.TemplateFile);
+
+string defaultTransform = "null;";
+switch (options.DefaultTransform)
+{
+	case "None": 
+		defaultTransform = "null";
+		break;
+	case "Trim": 
+		defaultTransform = "s => { var trimmed = (s ?? \"\").Trim(); return trimmed.Length == 0 ? null : trimmed; }";
+		break;
+	case "TrimToUpper": 
+		defaultTransform = "s => { var trimmed = (s ?? \"\").Trim(); return trimmed.Length == 0 ? null : trimmed.ToUpper(); }";
+		break;
+	default:
+		defaultTransform = string.Format("s => {0}(s)",options.DefaultTransform);
+		break;
+}
+
+
+#>
+// ============================================================================
+// Auto-generated. Do not edit!
+//
+// To add functionality, create and edit the partial class in a separate file. 
+// ============================================================================
+using System;
+namespace <#= namespaceHint #>
+{
+
+    /// <summary>
+    /// Struct to wrap strings for DDD, to avoid mixing up string types, and to avoid null strings.
+    /// </summary>
+    /// <remarks>
+    /// structs cannot inherit, so the code is duplicated for each. 
+    /// </remarks>
+    [Serializable]
+	[System.Diagnostics.DebuggerDisplay(@"<#= structName #>\{{Value}\}")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("T4Template:StringWrapper.ttinclude","1.0.0")] 
+    public partial struct <#= structName #> : IEquatable<<#= structName #>>, IComparable<<#= structName #>>
+    {
+
+        public string Value { get; private set; }
+
+		/// <summary>
+		/// Create a new struct wrapping a string.
+		/// </summary>
+        /// <param name="str">The string to wrap. It must not be null.</param>
+        /// <param name="transform">A function to transform and/or validate the string. 
+		/// The unwrapped string is passed into the transform function,  
+		/// and the transform should return null if the string is not valid, 
+		//  otherwise the transform should convert the string as needed (eg remove spaces, convert to uppercase, etc).
+		/// A null transform is ignored.
+		/// </param>
+		/// <exception cref="ArgumentNullException">Thrown if the str is null.</exception>
+        static public <#= structName #> New(string str, Func<string, string> transform)
+        {
+		    if (transform != null) { str = transform(str); }
+            if (str == null) { throw new ArgumentException("Input to <#= structName #> is not valid","str"); }
+            
+            return new <#= structName #> { Value = str };
+        }
+
+		/// <summary>
+		/// Create a new struct wrapping a string.
+		/// </summary>
+        /// <param name="str">The string to wrap. It must not be null.</param>
+		/// <exception cref="ArgumentNullException">Thrown if the str is null.</exception>
+        static public <#= structName #> New(string str)
+        {
+			Func<string, string> defaultTransform = <#= defaultTransform #>;
+			return New(str, defaultTransform);
+        }
+
+		/// <summary>
+		/// Create a new nullable struct wrapping a string, or null if the string is null or invalid.
+		/// </summary>
+        /// <param name="str">The string to wrap. If is is null or invalid, null is returned.</param>
+        /// <param name="transform">A function to transform and/or validate the string. 
+		/// The unwrapped string is passed into the transform function,  
+		/// and the transform should return null if the string is not valid, 
+		//  otherwise the transform should convert the string as needed (eg remove spaces, convert to uppercase, etc).
+		/// A null transform is ignored.
+		/// </param>
+        static public <#= structName #>? NewOption(string str, Func<string,string> transform)
+        {
+		    if (transform != null) { str = transform(str); }
+            if (str == null) { return null; }
+            return new <#= structName #> { Value = str };
+        }
+
+		/// <summary>
+		/// Create a new nullable struct wrapping a string, or null if the string is null.
+		/// </summary>
+        /// <param name="str">The string to wrap. If is is null, null is returned.</param>
+        static public <#= structName #>? NewOption(string str)
+        {
+			Func<string, string> defaultTransform = <#= defaultTransform #>;
+            return NewOption(str, defaultTransform);
+        }
+
+        public override string ToString()
+        {
+            return Value;
+        }
+
+        public override bool Equals(object other)
+        {
+            return other is <#= structName #> && Equals((<#= structName #>)other);
+        }
+
+        public bool Equals(<#= structName #> other)
+        {
+            return Value.Equals(other.Value, StringComparison.InvariantCulture);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+
+        public static bool operator ==(<#= structName #> lhs, <#= structName #> rhs)
+        {
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(<#= structName #> lhs, <#= structName #> rhs)
+        {
+            return !lhs.Equals(rhs);
+        }
+
+        public int CompareTo(<#= structName #> other)
+        {
+            return String.CompareOrdinal(Value, other.Value);
+        }
+    }
+
+    /// <summary>
+    /// Extensions to convert strings into <#= structName #>s.
+    /// </summary>
+ 	public static class <#= structName #>StringExtensions
+	{
+		/// <summary>
+		/// Create a new struct wrapping a string.
+		/// </summary>
+        /// <param name="str">The string to wrap. It must not be null.</param>
+        /// <param name="transform">A function to transform and/or validate the string. 
+		/// The unwrapped string is passed into the transform function,  
+		/// and the transform should return null if the string is not valid, 
+		//  otherwise the transform should convert the string as needed (eg remove spaces, convert to uppercase, etc).
+		/// A null transform is ignored.
+		/// </param>
+		/// <exception cref="ArgumentNullException">Thrown if the str is null.</exception>
+		public static <#= structName #> To<#= structName #>(this string str, Func<string, string> transform)
+		{
+			return <#= structName #>.New(str, transform);
+		}
+
+		/// <summary>
+		/// Create a new struct wrapping a string.
+		/// </summary>
+		/// <exception cref="ArgumentNullException">Thrown if the str is null.</exception>
+		public static <#= structName #> To<#= structName #>(this string str)
+		{
+			return <#= structName #>.New(str);
+		}
+
+		/// <summary>
+		/// Create a new nullable struct wrapping a string, or null if the string is null or invalid.
+		/// </summary>
+        /// <param name="str">The string to wrap. If is is null or invalid, null is returned.</param>
+        /// <param name="transform">A function to transform and/or validate the string. 
+		/// The unwrapped string is passed into the transform function,  
+		/// and the transform should return null if the string is not valid, 
+		//  otherwise the transform should convert the string as needed (eg remove spaces, convert to uppercase, etc).
+		/// A null transform is ignored.
+		/// </param>
+		public static <#= structName #>? To<#= structName #>Option(this string str, Func<string, string> transform)
+		{
+			return <#= structName #>.NewOption(str, transform);
+		}
+
+		/// <summary>
+		/// Create a new nullable struct wrapping a string, or null if the string is null.
+		/// </summary>
+		public static <#= structName #>? To<#= structName #>Option(this string str)
+		{
+			return <#= structName #>.NewOption(str);
+		}
+
+	}
+}

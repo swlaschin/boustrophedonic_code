@@ -1,0 +1,4 @@
+﻿<# 
+var options = new { DefaultTransform = "MyCustomTransform" };
+#>
+<#@ include file="..\StringWrapper.ttinclude" #>

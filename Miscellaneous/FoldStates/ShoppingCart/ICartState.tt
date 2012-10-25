@@ -1,0 +1,4 @@
+﻿<# 
+var states = new [] {"CartStateEmpty", "CartStateActive","CartStatePaid"}; 
+#>
+<#@ include file="..\FoldStates.ttinclude" #>

@@ -1,0 +1,4 @@
+﻿<# 
+var states = new [] {"EmailAddress", "ValidEmailAddress"}; 
+#>
+<#@ include file="..\FoldStates.ttinclude" #>

@@ -1,0 +1,4 @@
+﻿<# 
+var options = new { DefaultTransform = "TrimToUpper" };
+#>
+<#@ include file="..\StringWrapper.ttinclude" #>

@@ -1,0 +1,4 @@
+﻿<# 
+var options = new { DefaultTransform = "ReferenceData.TransformProductCode" };
+#>
+<#@ include file="..\StringWrapper.ttinclude" #>

@@ -1,0 +1,4 @@
+﻿<# 
+var states = new [] {"GameStateXToMove", "GameStateOToMove","GameStateGameOver"}; 
+#>
+<#@ include file="..\FoldStates.ttinclude" #>
